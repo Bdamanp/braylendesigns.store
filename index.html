@@ -248,9 +248,15 @@ nav .container {
 .hero-image-wrap img {
   width: 100%;
   border-radius: 20px;
-  border: 1px solid rgba(255,255,255,0.08);
-  box-shadow: 0 24px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(79,143,255,0.1);
+  border: none;
+  box-shadow: none;
   display: block;
+  mix-blend-mode: screen;
+  animation: float 5s ease-in-out infinite;
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(-1deg); }
+  50%       { transform: translateY(-18px) rotate(1deg); }
 }
 .hero-image-glow {
   position: absolute;
@@ -1876,7 +1882,7 @@ footer {
     </div><!-- /hero-content -->
     <div class="hero-image-wrap">
       <div class="hero-image-glow"></div>
-      <img src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=900&q=80&auto=format&fit=crop" alt="Professional keyboard and workspace" loading="lazy">
+      <img src="https://images.unsplash.com/photo-1541140532154-b024d705b90a?w=900&q=80&auto=format&fit=crop" alt="Professional keyboard" loading="lazy">
     </div>
     </div><!-- /hero-inner -->
   </div>
@@ -2364,7 +2370,6 @@ footer {
           <label>Email</label>
         </div>
         <div class="f-group">
-          <label>What do you need?</label>
           <select name="service" required>
             <option value="">Select a service...</option>
             <option>New Website Design</option>
@@ -2372,6 +2377,7 @@ footer {
             <option>Monthly Maintenance</option>
             <option>Not sure yet</option>
           </select>
+          <label>What do you need?</label>
         </div>
         <div class="f-group">
           <textarea name="message" placeholder=" " required></textarea>
