@@ -234,6 +234,36 @@ nav .container {
   z-index: 2;
   max-width: 780px;
 }
+.hero-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+  width: 100%;
+}
+.hero-image-wrap {
+  position: relative;
+  z-index: 2;
+}
+.hero-image-wrap img {
+  width: 100%;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 24px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(79,143,255,0.1);
+  display: block;
+}
+.hero-image-glow {
+  position: absolute;
+  inset: -20px;
+  background: radial-gradient(circle at center, rgba(79,143,255,0.12) 0%, transparent 70%);
+  border-radius: 30px;
+  pointer-events: none;
+  z-index: -1;
+}
+@media (max-width: 768px) {
+  .hero-inner { grid-template-columns: 1fr; }
+  .hero-image-wrap { display: none; }
+}
 .hero-badge {
   display: inline-flex;
   align-items: center;
@@ -484,6 +514,37 @@ section { padding: 130px 0; }
   background: var(--accent-dim);
   padding: 5px 14px;
   border-radius: 99px;
+}
+
+/* ── WORKSPACE PHOTOS ── */
+.workspace-photos {
+  padding: 60px 0;
+}
+.workspace-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.workspace-img-wrap {
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  aspect-ratio: 16/10;
+}
+.workspace-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+  filter: brightness(0.85) saturate(0.9);
+}
+.workspace-img-wrap:hover img {
+  transform: scale(1.04);
+  filter: brightness(0.95) saturate(1);
+}
+@media (max-width: 768px) {
+  .workspace-grid { grid-template-columns: 1fr; }
 }
 
 /* ── BEFORE / AFTER TRANSFORMATION ── */
@@ -1803,6 +1864,7 @@ footer {
   <div class="hero-glow"></div>
   <div class="hero-glow-2"></div>
   <div class="container">
+    <div class="hero-inner">
     <div class="hero-content">
       <div class="hero-badge"><i></i> Serving the Indianapolis Area</div>
       <h1>Websites that<br><span class="accent">grow your business.</span></h1>
@@ -1811,7 +1873,12 @@ footer {
         <a href="#contact" class="btn btn-fill">Start Your Project &rarr;</a>
         <a href="#work" class="btn btn-ghost">See Our Work</a>
       </div>
+    </div><!-- /hero-content -->
+    <div class="hero-image-wrap">
+      <div class="hero-image-glow"></div>
+      <img src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=900&q=80&auto=format&fit=crop" alt="Professional keyboard and workspace" loading="lazy">
     </div>
+    </div><!-- /hero-inner -->
   </div>
 </section>
 
@@ -1869,6 +1936,23 @@ footer {
     </div>
   </div>
 </section>
+
+<!-- WORKSPACE PHOTOS -->
+<div class="workspace-photos reveal">
+  <div class="container">
+    <div class="workspace-grid">
+      <div class="workspace-img-wrap">
+        <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&q=80&auto=format&fit=crop" alt="Coding on laptop" loading="lazy">
+      </div>
+      <div class="workspace-img-wrap">
+        <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600&q=80&auto=format&fit=crop" alt="Web development" loading="lazy">
+      </div>
+      <div class="workspace-img-wrap">
+        <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&q=80&auto=format&fit=crop" alt="Laptop workspace" loading="lazy">
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- BEFORE / AFTER TRANSFORMATION -->
 <section class="transform-section">
