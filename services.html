@@ -22,6 +22,58 @@
 html { scroll-behavior: smooth; }
 body { font-family: var(--font-body); background: var(--bg); color: var(--text); overflow-x: hidden; -webkit-font-smoothing: antialiased; line-height: 1.6; }
 .container { max-width: 1160px; margin: 0 auto; padding: 0 28px; }
+
+/* ── Design System Animations ── */
+@keyframes gradientText {
+  0%,100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+@keyframes glowPulse {
+  0%,100% { box-shadow: 0 0 20px rgba(79,143,255,0.2); }
+  50% { box-shadow: 0 0 50px rgba(79,143,255,0.5), 0 0 100px rgba(167,139,250,0.15); }
+}
+@keyframes float {
+  0%,100% { transform: translateY(0px) rotate(-1deg); }
+  50% { transform: translateY(-18px) rotate(1deg); }
+}
+@keyframes shimmer {
+  0% { transform: translateX(-100%) skewX(-12deg); }
+  100% { transform: translateX(250%) skewX(-12deg); }
+}
+@keyframes borderGlow {
+  0%,100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+.gradient-text {
+  background: linear-gradient(135deg, #fff 0%, #4f8fff 35%, #a78bfa 65%, #fff 100%);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientText 6s ease infinite;
+}
+.glass-card {
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 24px;
+}
+.btn-glow {
+  position: relative;
+  overflow: hidden;
+  animation: glowPulse 3s ease-in-out infinite;
+}
+.btn-glow::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 60%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+  transform: skewX(-12deg);
+  animation: shimmer 3s ease infinite;
+}
+
 @keyframes fadeUp { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:translateY(0); } }
 .reveal { opacity:0; transform:translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
 .reveal.visible { opacity:1; transform:translateY(0); }
@@ -65,7 +117,7 @@ nav .container { display:flex; justify-content:space-between; align-items:center
 .svc-feat::before { content:'\2713'; color:var(--accent); font-weight:700; font-size:0.78rem; width:24px; height:24px; background:var(--accent-dim); border-radius:6px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
 
 /* Info card panel */
-.svc-card-panel { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-lg); padding:36px; }
+.svc-card-panel { background:rgba(255,255,255,0.03); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border:1px solid rgba(255,255,255,0.08); border-radius:var(--radius-lg); padding:36px; }
 .svc-card-panel h3 { font-family:var(--font-display); font-weight:700; font-size:1.1rem; color:var(--white); margin-bottom:20px; line-height:1.4; }
 .svc-card-panel .step-list { counter-reset:step; }
 .step-item { display:flex; gap:16px; margin-bottom:20px; align-items:start; }
@@ -127,7 +179,7 @@ footer { border-top:1px solid var(--border); padding:40px 0 28px; }
 <section class="page-hero">
   <div class="page-hero-glow"></div>
   <div class="container">
-    <h1>What we <span class="accent">do.</span></h1>
+    <h1 class="gradient-text">What we do.</h1>
     <p>From brand new builds to complete redesigns and ongoing care &mdash; we handle everything so you can focus on your business.</p>
   </div>
 </section>
@@ -153,7 +205,7 @@ footer { border-top:1px solid var(--border); padding:40px 0 28px; }
           <span class="svc-feat">Fast loading (under 3 seconds)</span>
           <span class="svc-feat">Free domain setup assistance</span>
         </div>
-        <a href="index.html#contact" class="btn btn-fill">Start Your Project &rarr;</a>
+        <a href="index.html#contact" class="btn btn-fill btn-glow">Start Your Project &rarr;</a>
       </div>
       <div class="svc-card-panel">
         <h3>How it works</h3>

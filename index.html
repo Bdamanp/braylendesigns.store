@@ -67,6 +67,55 @@ body::after {
   padding: 0 28px;
 }
 
+/* ── Design System Animations ── */
+@keyframes gradientText {
+  0%,100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+@keyframes glowPulse {
+  0%,100% { box-shadow: 0 0 20px rgba(79,143,255,0.2); }
+  50% { box-shadow: 0 0 50px rgba(79,143,255,0.5), 0 0 100px rgba(167,139,250,0.15); }
+}
+@keyframes borderGlow {
+  0%,100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+/* Gradient text utility */
+.gradient-text {
+  background: linear-gradient(135deg, #fff 0%, #4f8fff 35%, #a78bfa 65%, #fff 100%);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientText 6s ease infinite;
+}
+
+/* Glassmorphism card */
+.glass-card {
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 24px;
+}
+
+/* Glow button */
+.btn-glow {
+  position: relative;
+  overflow: hidden;
+  animation: glowPulse 3s ease-in-out infinite;
+}
+.btn-glow::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 60%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+  transform: skewX(-12deg);
+  animation: shimmer 3s ease infinite;
+}
+
 /* ── Animations ── */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(30px); }
@@ -208,8 +257,8 @@ nav .container {
   align-items: center;
   padding: 160px 0 120px;
   position: relative;
-  background-image: radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px);
-  background-size: 32px 32px;
+  background-image: radial-gradient(ellipse at 60% 0%, rgba(79,143,255,0.08) 0%, transparent 60%), radial-gradient(ellipse at 0% 100%, rgba(167,139,250,0.05) 0%, transparent 50%), radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 32px 32px;
 }
 .hero-glow {
   position: absolute;
@@ -455,21 +504,33 @@ section { padding: 130px 0; }
   gap: 20px;
 }
 .svc-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.08);
   border-radius: var(--radius-lg);
   padding: 40px 32px;
-  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
-              border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
-              background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
-              box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.35s cubic-bezier(0.4,0,0.2,1),
+              border-color 0.35s ease,
+              box-shadow 0.35s ease;
+}
+.svc-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(79,143,255,0.06) 0%, rgba(167,139,250,0.04) 100%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
 }
 .svc-card:hover {
-  transform: translateY(-3px);
-  border-color: rgba(79, 143, 255, 0.2);
-  background: var(--bg-card-hover);
-  box-shadow: 0 0 0 1px rgba(79, 143, 255, 0.12), 0 8px 24px rgba(0, 0, 0, 0.4);
+  transform: translateY(-8px);
+  border-color: rgba(79,143,255,0.35);
+  box-shadow: 0 24px 64px rgba(0,0,0,0.5), 0 0 0 1px rgba(79,143,255,0.15), inset 0 1px 0 rgba(255,255,255,0.06);
 }
+.svc-card:hover::before { opacity: 1; }
 .svc-icon {
   width: 52px;
   height: 52px;
@@ -1497,6 +1558,7 @@ section { padding: 130px 0; }
   border-color: rgba(79, 143, 255, 0.25);
   background: linear-gradient(180deg, rgba(79, 143, 255, 0.04), var(--bg-card));
   position: relative;
+  animation: glowPulse 3s ease-in-out infinite;
 }
 .pop-badge {
   position: absolute;
@@ -1873,10 +1935,10 @@ footer {
     <div class="hero-inner">
     <div class="hero-content">
       <div class="hero-badge"><i></i> Serving the Indianapolis Area</div>
-      <h1>Websites that<br><span class="accent">grow your business.</span></h1>
+      <h1 class="gradient-text">Websites that grow your business.</h1>
       <p class="hero-sub">Modern, fast, and built to convert. Braylen Digital creates professional websites for local businesses that actually bring in customers.</p>
       <div class="hero-buttons">
-        <a href="#contact" class="btn btn-fill">Start Your Project &rarr;</a>
+        <a href="#contact" class="btn btn-fill btn-glow">Start Your Project &rarr;</a>
         <a href="#work" class="btn btn-ghost">See Our Work</a>
       </div>
     </div><!-- /hero-content -->
@@ -1911,7 +1973,7 @@ footer {
   <div class="container">
     <div class="reveal">
       <p class="section-eyebrow">What We Do</p>
-      <h2 class="section-heading">Services built for<br>business growth.</h2>
+      <h2 class="section-heading gradient-text">Services built for<br>business growth.</h2>
       <p class="section-desc">Everything you need to establish a professional online presence and keep it running smoothly.</p>
     </div>
     <div class="services-grid">
@@ -2268,7 +2330,7 @@ footer {
   <div class="container">
     <div class="reveal" style="text-align:center; margin-bottom:56px;">
       <p class="section-eyebrow">Pricing</p>
-      <h2 class="section-heading">Transparent pricing.<br>No surprises.</h2>
+      <h2 class="section-heading gradient-text">Transparent pricing.<br>No surprises.</h2>
     </div>
     <div class="pricing-grid">
       <div class="price-card reveal">

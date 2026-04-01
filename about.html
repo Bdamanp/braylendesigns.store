@@ -22,6 +22,58 @@
 html { scroll-behavior: smooth; }
 body { font-family: var(--font-body); background: var(--bg); color: var(--text); overflow-x: hidden; -webkit-font-smoothing: antialiased; line-height: 1.6; }
 .container { max-width: 1160px; margin: 0 auto; padding: 0 28px; }
+
+/* ── Design System Animations ── */
+@keyframes gradientText {
+  0%,100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+@keyframes glowPulse {
+  0%,100% { box-shadow: 0 0 20px rgba(79,143,255,0.2); }
+  50% { box-shadow: 0 0 50px rgba(79,143,255,0.5), 0 0 100px rgba(167,139,250,0.15); }
+}
+@keyframes float {
+  0%,100% { transform: translateY(0px) rotate(-1deg); }
+  50% { transform: translateY(-18px) rotate(1deg); }
+}
+@keyframes shimmer {
+  0% { transform: translateX(-100%) skewX(-12deg); }
+  100% { transform: translateX(250%) skewX(-12deg); }
+}
+@keyframes borderGlow {
+  0%,100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+.gradient-text {
+  background: linear-gradient(135deg, #fff 0%, #4f8fff 35%, #a78bfa 65%, #fff 100%);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientText 6s ease infinite;
+}
+.glass-card {
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 24px;
+}
+.btn-glow {
+  position: relative;
+  overflow: hidden;
+  animation: glowPulse 3s ease-in-out infinite;
+}
+.btn-glow::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 60%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+  transform: skewX(-12deg);
+  animation: shimmer 3s ease infinite;
+}
+
 @keyframes fadeUp { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:translateY(0); } }
 .reveal { opacity:0; transform:translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
 .reveal.visible { opacity:1; transform:translateY(0); }
@@ -69,7 +121,10 @@ nav .container { display:flex; justify-content:space-between; align-items:center
 
 /* Avatar placeholder */
 .about-avatar {
-  background: var(--bg-card); border: 1px solid var(--border-light);
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.08);
   border-radius: var(--radius-lg); padding: 48px;
   text-align: center; position: relative; overflow: hidden;
   animation: fadeUp 0.7s ease both 0.15s;
@@ -143,11 +198,25 @@ nav .container { display:flex; justify-content:space-between; align-items:center
   display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
 }
 .value-card {
-  background: var(--bg-card); border: 1px solid var(--border);
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.08);
   border-radius: var(--radius-lg); padding: 36px 28px;
-  transition: transform 0.4s ease, border-color 0.4s;
+  position: relative; overflow: hidden;
+  transition: transform 0.35s cubic-bezier(0.4,0,0.2,1), border-color 0.35s ease, box-shadow 0.35s ease;
 }
-.value-card:hover { transform: translateY(-3px); border-color: var(--border-light); }
+.value-card::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(79,143,255,0.06) 0%, rgba(167,139,250,0.04) 100%);
+  opacity: 0; transition: opacity 0.35s ease; pointer-events: none;
+}
+.value-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(79,143,255,0.35);
+  box-shadow: 0 24px 64px rgba(0,0,0,0.5), 0 0 0 1px rgba(79,143,255,0.15), inset 0 1px 0 rgba(255,255,255,0.06);
+}
+.value-card:hover::before { opacity: 1; }
 .value-icon {
   font-size: 1.8rem; margin-bottom: 16px;
 }
@@ -181,7 +250,10 @@ nav .container { display:flex; justify-content:space-between; align-items:center
   padding: 0 0 120px; text-align: center;
 }
 .about-cta-box {
-  background: var(--bg-card); border: 1px solid var(--border-light);
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.08);
   border-radius: var(--radius-lg); padding: 72px 48px; position: relative;
 }
 .about-cta-box::before {
@@ -247,7 +319,7 @@ footer { border-top:1px solid var(--border); padding:40px 0 28px; }
     <div class="about-hero-grid">
       <div class="about-hero-text">
         <p class="subtitle">Meet the Founder</p>
-        <h1>I'm Braylen.<br>I build websites that <span class="accent">work.</span></h1>
+        <h1 class="gradient-text">I'm Braylen. I build websites that work.</h1>
         <p>I'm a 15-year-old web designer from Indianapolis building Braylen Digital into a platform that helps local businesses look professional online &mdash; without the agency price tag.</p>
         <p>While most people my age are scrolling, I'm building. I started learning web design because I saw how many small businesses in my area had terrible websites (or no website at all) and I knew I could help.</p>
       </div>
@@ -332,7 +404,7 @@ footer { border-top:1px solid var(--border); padding:40px 0 28px; }
     <div class="about-cta-box reveal">
       <h2>Ready to work together?</h2>
       <p>Tell me about your business and I'll put together a free quote and mockup. No pressure, no commitment.</p>
-      <a href="index.html#contact" class="btn btn-fill">Get Your Free Quote &rarr;</a>
+      <a href="index.html#contact" class="btn btn-fill btn-glow">Get Your Free Quote &rarr;</a>
     </div>
   </div>
 </section>
