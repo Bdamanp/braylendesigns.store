@@ -2045,22 +2045,21 @@ footer {
           <span>Typically responds within 24 hours</span>
         </div>
       </div>
-      <form class="contact-form reveal" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="contactForm">
-        <input type="hidden" name="form-name" value="contact">
+      <form class="contact-form reveal" id="contactForm">
         <p style="display:none;"><label>Don't fill this out: <input name="bot-field"></label></p>
         <div class="f-row">
           <div class="f-group">
             <label>Your Name</label>
-            <input type="text" name="name" placeholder="John Smith" required>
+            <input type="text" name="name" placeholder="John Smith" required maxlength="100">
           </div>
           <div class="f-group">
             <label>Business Name</label>
-            <input type="text" name="business" placeholder="Acme Plumbing">
+            <input type="text" name="business" placeholder="Acme Plumbing" maxlength="100">
           </div>
         </div>
         <div class="f-group">
           <label>Email</label>
-          <input type="email" name="email" placeholder="john@business.com" required>
+          <input type="email" name="email" placeholder="john@business.com" required maxlength="254">
         </div>
         <div class="f-group">
           <label>What do you need?</label>
@@ -2074,7 +2073,7 @@ footer {
         </div>
         <div class="f-group">
           <label>Tell us about your project</label>
-          <textarea name="message" placeholder="Describe your business and what you're looking for..." required></textarea>
+          <textarea name="message" placeholder="Describe your business and what you're looking for..." required maxlength="2000"></textarea>
         </div>
         <button class="btn btn-fill" style="width:100%; justify-content:center;" type="submit" id="submitBtn">Send Message &rarr;</button>
         <p id="formStatus" style="text-align:center; margin-top:14px; font-size:0.88rem; display:none;"></p>
@@ -2136,17 +2135,31 @@ const form = document.getElementById('contactForm');
 const submitBtn = document.getElementById('submitBtn');
 const formStatus = document.getElementById('formStatus');
 
+const RATE_LIMIT_MS = 60000; // 1 submission per minute
+let lastSubmitTime = 0;
+
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
+
+  const now = Date.now();
+  if (now - lastSubmitTime < RATE_LIMIT_MS) {
+    formStatus.style.display = 'block';
+    formStatus.style.color = '#ff6b6b';
+    formStatus.textContent = 'Please wait a moment before submitting again.';
+    return;
+  }
+  lastSubmitTime = now;
+
   submitBtn.textContent = 'Sending...';
   submitBtn.disabled = true;
 
   try {
-    const formData = new URLSearchParams(new FormData(form));
-    const response = await fetch('/', {
+    const formData = new FormData(form);
+    const body = Object.fromEntries(formData.entries());
+    const response = await fetch('/api/contact', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: formData.toString()
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
     });
 
     if (response.ok) {
