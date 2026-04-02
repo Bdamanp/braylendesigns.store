@@ -1,0 +1,17 @@
+{
+  "name": "leads",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "find-leads": "node -r dotenv/config find-leads.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "apify-client": "^2.22.3",
+    "dotenv": "^17.4.0"
+  }
+}
