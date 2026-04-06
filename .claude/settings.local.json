@@ -3,5 +3,18 @@
     "allow": [
       "Bash(claude install-skill:*)"
     ]
+  },
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "printf '%s' '{\"hookSpecificOutput\":{\"hookEventName\":\"Stop\",\"additionalContext\":\"Before finishing: read CLAUDE.md at C:/Users/braylen/Desktop/Braylen Digital/braylendesigns.store-main/CLAUDE.md and update the Session Log table with today date and a one-line summary of what was done this session. Also update any project facts that changed (services, pricing, stack, etc.). Then save the file.\"}}' ",
+            "statusMessage": "Updating CLAUDE.md session log..."
+          }
+        ]
+      }
+    ]
   }
 }
