@@ -1,0 +1,36 @@
+# robots.txt — Braylen Digital
+# Allow all major search and AI crawlers
+
+User-agent: *
+Allow: /
+
+# AI Search crawlers (allow for citation)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+# Block Common Crawl (training data harvester, not a search/AI citation bot)
+User-agent: CCBot
+Disallow: /
+
+Sitemap: https://braylendesigns.store/sitemap.xml
